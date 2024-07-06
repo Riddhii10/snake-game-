@@ -138,7 +138,7 @@ const SnakeGrid = () => {
     <div
       tabIndex={0}
       autoFocus
-      className="relative flex flex-col items-center justify-center p-2 bg-white shadow-lg rounded-lg border-gray-200"
+      className="relative flex flex-col items-center justify-center p-2 bg-white shadow-lg rounded-md border-gray-200"
     >
       {gameOver && (
         <div className="absolute inset-0 flex flex-col items-center justify-center bg-gray-100 p-2 rounded-lg shadow-lg">
