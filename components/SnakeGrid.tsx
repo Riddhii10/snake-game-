@@ -118,7 +118,7 @@ const SnakeGrid = () => {
 
   useEffect(() => {
     if (direction && !gameOver) {
-      const interval = setInterval(moveSnake, 150);
+      const interval = setInterval(moveSnake, 100);
       return () => clearInterval(interval);
     }
   }, [snake, direction, gameOver]);
