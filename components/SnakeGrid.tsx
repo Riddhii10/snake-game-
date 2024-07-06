@@ -116,20 +116,12 @@ const SnakeGrid = () => {
     }
 
     return (
-        <div
-            tabIndex={0}
-            autoFocus
-            className='grid grid-cols-20 grid-rows-20 border border-black'
-        >
-            {gameOver && (
-      <div
-        className="absolute inset-0 flex flex-col items-center justify-center bg-gray-200 p-4 rounded-lg shadow-md"
-      >
+        <div tabIndex={0} autoFocus className='grid grid-cols-20 grid-rows-20 border border-black'>{gameOver && (<div className="absolute inset-0 flex flex-col items-center justify-center bg-gray-200 p-4 rounded-lg shadow-md">
         <h1 className="text-4xl font-bold text-red-500">GAME OVER!</h1>
         <p className="mt-2 text-lg">Score: {score}</p>
         <p className="mt-2 text-lg">High Score: {highScore}</p>
         <button onClick={restartGame} className="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-          Restart
+        PLAY AGAIN!!!
         </button>
       </div>
     )}
@@ -140,7 +132,7 @@ const SnakeGrid = () => {
       </div>
       <div className="flex justify-end">
         <button onClick={restartGame} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-          Restart
+          PLAY
         </button>
       </div>
     </div>
