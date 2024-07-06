@@ -141,7 +141,7 @@ const SnakeGrid = () => {
                     {Array.from({ length: GRID_SIZE }).map((_, x) => (
                         <div
                             key={x}
-                            className={`w-5 h-5 border border-gray-300
+                            className={`w-5 h-5 border border-gray-50
                                 ${snake.some(
                                     (snakePart) => snakePart.x === x && snakePart.y === y
                                 ) && "bg-green-500"}
