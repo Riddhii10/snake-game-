@@ -1,12 +1,16 @@
 "use client";
 import React, { KeyboardEvent, useEffect, useState } from "react";
+import SnakePart from './SnakePart';
 
 const GRID_SIZE = 20;
+
 type Point = {
   x: number;
   y: number;
 };
+
 type Direction = "UP" | "DOWN" | "LEFT" | "RIGHT";
+
 const SnakeGrid = () => {
   const [snake, setSnake] = useState<Point[]>([
     { y: 0, x: 2 },
@@ -24,8 +28,9 @@ const SnakeGrid = () => {
     const y = Math.floor(Math.random() * GRID_SIZE);
     setFood({ x, y });
   };
+
   const moveSnake = () => {
-    if (!direction || gameOver) return; // Exit early if game is over or no direction is set
+    if (!direction || gameOver) return;
 
     const newSnake = [...snake];
     const snakeHead = { ...newSnake[0] };
@@ -70,6 +75,7 @@ const SnakeGrid = () => {
   };
 
   const handleKeyPress = (event: KeyboardEvent<HTMLDivElement>) => {
+    event.preventDefault(); // Prevents the default action
     if (event.key === "ArrowUp" && direction !== "DOWN") {
       setDirection("UP");
     }
@@ -106,13 +112,13 @@ const SnakeGrid = () => {
       setDirection(null);
       if (score > highScore) {
         setHighScore(score);
-      } // Stop the snake movement
+      }
     }
   }, [gameOver]);
 
   useEffect(() => {
     if (direction && !gameOver) {
-      const interval = setInterval(moveSnake, 100);
+      const interval = setInterval(moveSnake, 150);
       return () => clearInterval(interval);
     }
   }, [snake, direction, gameOver]);
@@ -132,44 +138,36 @@ const SnakeGrid = () => {
     <div
       tabIndex={0}
       autoFocus
-      className="fixed p-4 bg-white shadow-lg rounded-lg border-gray-200"
+      className="relative flex flex-col items-center justify-center p-2 bg-white shadow-lg rounded-lg border-gray-200"
     >
       {gameOver && (
-        <div className="absolute inset-0 flex flex-col items-center justify-center bg-gray-100 p-4 rounded-lg shadow-lg">
-          <h1 className="text-4xl font-bold text-red-500">GAME OVER!</h1>
+        <div className="absolute inset-0 flex flex-col items-center justify-center bg-gray-100 p-2 rounded-lg shadow-lg">
+          <h1 className="text-4xl font-bold text-red-500 mt-2">GAME OVER!</h1>
           <p className="mt-2 text-lg">Score: {score}</p>
           <p className="mt-2 text-lg">High Score: {highScore}</p>
           <button
             onClick={restartGame}
             className="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
           >
-            PLAY AGAIN!!!
+            Play Again
           </button>
         </div>
       )}
-      <div className="grid grid-cols-20 grid-rows-20 bg-green-200">
-        {Array.from({ length: GRID_SIZE }).map((_, y) => (
-          <div className="flex" key={y}>
-            {Array.from({ length: GRID_SIZE }).map((_, x) => (
-              <div
-                key={x}
-                className={`w-5 h-5
-                  ${
-                    snake.some(
-                      (snakePart) =>
-                        snakePart.x === x && snakePart.y === y
-                    )
-                      ? "bg-green-500"
-                      : ""
-                  }
-                  ${food.x === x && food.y === y ? "bg-red-500" : ""}
-                `}
-              ></div>
-            ))}
-          </div>
-        ))}
+      <div className="border-4 border-green-300 bg-green-200 p-1 rounded-lg">
+        <svg
+          viewBox={`0 0 ${GRID_SIZE * 20} ${GRID_SIZE * 20}`}
+          className="w-full h-full"
+        >
+          <SnakePart points={snake} />
+          <circle
+            cx={food.x * 20 + 10}
+            cy={food.y * 20 + 10}
+            r={10}
+            fill="red"
+          />
+        </svg>
       </div>
-      <div className="flex flex-col items-center justify-between h-full mt-4 bg-blue-50 p-4 rounded-lg">
+      <div className="flex flex-col items-center justify-between w-full h-full mt-4 bg-blue-50 p-2 rounded-3xl border-4 border-blue-200">
         <div className="text-center mb-4">
           <p className="text-xl font-bold">Score: {score}</p>
           <p className="text-xl font-bold">High Score: {highScore}</p>
@@ -179,7 +177,7 @@ const SnakeGrid = () => {
             onClick={restartGame}
             className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
           >
-            RESTART
+            Play
           </button>
         </div>
       </div>
