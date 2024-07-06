@@ -67,6 +67,7 @@ const SnakeGrid = () => {
     }
 
     setSnake(newSnake);
+    setScore(newSnake.length-3);
   };
 
   const handleKeyPress = (event: KeyboardEvent<HTMLDivElement>) => {
@@ -132,10 +133,10 @@ const SnakeGrid = () => {
     <div
       tabIndex={0}
       autoFocus
-      className="grid grid-cols-20 grid-rows-20 border border-black"
+      className="relative p-4 bg-white shadow-lg rounded-lg border-gray-200"
     >
       {gameOver && (
-        <div className="absolute inset-0 flex flex-col items-center justify-center bg-gray-200 p-4 rounded-lg shadow-md">
+        <div className="absolute inset-0 flex flex-col items-center justify-center bg-gray-100 p-4 rounded-lg shadow-lg">
           <h1 className="text-4xl font-bold text-red-500">GAME OVER!</h1>
           <p className="mt-2 text-lg">Score: {score}</p>
           <p className="mt-2 text-lg">High Score: {highScore}</p>
@@ -147,7 +148,7 @@ const SnakeGrid = () => {
           </button>
         </div>
       )}
-        
+
       {Array.from({ length: GRID_SIZE }).map((_, y) => (
         <div className="flex" key={y}>
           {Array.from({ length: GRID_SIZE }).map((_, x) => (
@@ -158,15 +159,15 @@ const SnakeGrid = () => {
                                   snake.some(
                                     (snakePart) =>
                                       snakePart.x === x && snakePart.y === y
-                                  ) && "bg-green-500"
+                                  ) ?"bg-green-500":"border-gray-50"
                                 }
-                                ${food.x === x && food.y === y && "bg-red-500"}
+                                ${food.x === x && food.y === y? "bg-red-500":""}
                             `}
             ></div>
           ))}
         </div>
       ))}
-       <div className="flex flex-col items-center justify-between h-full">
+       <div className="flex flex-col items-center justify-between h-full mt-4 bg-blue-50 p-4 rounded-lg">
         <div className="text-center mb-4">
           <p className="text-xl font-bold">Score: {score}</p>
           <p className="text-xl font-bold">High Score: {highScore}</p>
