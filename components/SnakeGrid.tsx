@@ -25,6 +25,7 @@ const SnakeGrid = () => {
     const y = Math.floor(Math.random() * GRID_SIZE);
     setFood({ x, y });
   };
+
   const moveSnake = () => {
     if (!direction || gameOver) return; // Exit early if game is over or no direction is set
 
@@ -67,7 +68,7 @@ const SnakeGrid = () => {
     }
 
     setSnake(newSnake);
-    setScore(newSnake.length-3);
+    setScore(newSnake.length - 3);
   };
 
   const handleKeyPress = (event: KeyboardEvent<HTMLDivElement>) => {
@@ -113,7 +114,7 @@ const SnakeGrid = () => {
 
   useEffect(() => {
     if (direction && !gameOver) {
-      const interval = setInterval(moveSnake, 400);
+      const interval = setInterval(moveSnake, 200);
       return () => clearInterval(interval);
     }
   }, [snake, direction, gameOver]);
@@ -148,30 +149,39 @@ const SnakeGrid = () => {
           </button>
         </div>
       )}
-       <div className="grid grid-cols-20 grid-rows-20 border-2 border-green-500 bg-green-200">
+      <div className="grid grid-cols-20 grid-rows-20 border-2 border-green-500 bg-green-200">
+        {Array.from({ length: GRID_SIZE }).map((_, y) => (
+          <div className="flex" key={y}>
+            {Array.from({ length: GRID_SIZE }).map((_, x) => {
+              const isHead = snake[0].x === x && snake[0].y === y;
+              const isSnake = snake.some(
+                (snakePart) => snakePart.x === x && snakePart.y === y
+              );
+              const isFood = food.x === x && food.y === y;
+              const headDirection =
+                direction === "UP"
+                  ? "rounded-t-full"
+                  : direction === "DOWN"
+                  ? "rounded-b-full"
+                  : direction === "LEFT"
+                  ? "rounded-l-full"
+                  : "rounded-r-full";
 
-       
-      {Array.from({ length: GRID_SIZE }).map((_, y) => (
-        <div className="flex" key={y}>
-          {Array.from({ length: GRID_SIZE }).map((_, x) => (
-            <div
-              key={x}
-              className={`w-5 h-5 border border-gray-50
-                                ${
-                                  snake.some(
-                                    (snakePart) =>
-                                      snakePart.x === x && snakePart.y === y
-                                  ) ?"bg-green-500":""
-                                }
-                                ${food.x === x && food.y === y? "bg-red-500":""}
-                            `}
-            ></div>
-          ))}
-        </div>
-        
-      ))}
+              return (
+                <div
+                  key={x}
+                  className={`w-5 h-5 border border-gray-50 transition-all duration-150
+                    ${isHead ? `bg-green-700 ${headDirection}` : ""}
+                    ${isSnake && !isHead ? "bg-green-500" : ""}
+                    ${isFood ? "bg-red-500" : ""}
+                  `}
+                ></div>
+              );
+            })}
+          </div>
+        ))}
       </div>
-       <div className="flex flex-col items-center justify-between h-full mt-4 bg-blue-50 p-4 rounded-lg">
+      <div className="flex flex-col items-center justify-between h-full mt-4 bg-blue-50 p-4 rounded-lg">
         <div className="text-center mb-4">
           <p className="text-xl font-bold">Score: {score}</p>
           <p className="text-xl font-bold">High Score: {highScore}</p>
