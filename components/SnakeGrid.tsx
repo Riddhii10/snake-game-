@@ -113,7 +113,7 @@ const SnakeGrid = () => {
 
   useEffect(() => {
     if (direction && !gameOver) {
-      const interval = setInterval(moveSnake, 100);
+      const interval = setInterval(moveSnake, 400);
       return () => clearInterval(interval);
     }
   }, [snake, direction, gameOver]);
@@ -177,7 +177,7 @@ const SnakeGrid = () => {
             onClick={restartGame}
             className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
           >
-            PLAY
+            RESTART
           </button>
         </div>
       </div>
