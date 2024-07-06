@@ -15,6 +15,10 @@ const SnakeGrid = () => {
     const [direction, setDirection] = useState<Direction | null>(null);
     const [gameOver, setGameOver] = useState<boolean>(false);
 
+
+    const [score, setScore] = useState(0);
+    const [highScore, setHighScore] = useState(0);
+
     const generateFood = () => {
         const x = Math.floor(Math.random() * GRID_SIZE);
         const y = Math.floor(Math.random() * GRID_SIZE);
@@ -88,7 +92,10 @@ const SnakeGrid = () => {
 
     useEffect(() => {
         if (gameOver) {
-            setDirection(null); // Stop the snake movement
+            setDirection(null); 
+            if (score > highScore) {
+                setHighScore(score);
+              }// Stop the snake movement
         }
     }, [gameOver]);
 
@@ -115,11 +122,28 @@ const SnakeGrid = () => {
             className='grid grid-cols-20 grid-rows-20 border border-black'
         >
             {gameOver && (
-                <div className='absolute inset-0 flex justify-center items-center text-4xl font-bold text-red-500'>
-                    <button onClick={restartGame}>GAME OVER!</button>
-
-                </div>
-            )}
+      <div
+        className="absolute inset-0 flex flex-col items-center justify-center bg-gray-200 p-4 rounded-lg shadow-md"
+      >
+        <h1 className="text-4xl font-bold text-red-500">GAME OVER!</h1>
+        <p className="mt-2 text-lg">Score: {score}</p>
+        <p className="mt-2 text-lg">High Score: {highScore}</p>
+        <button onClick={restartGame} className="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+          Restart
+        </button>
+      </div>
+    )}
+    <div className="flex flex-col items-center justify-between h-full">
+      <div className="text-center mb-4">
+        <p className="text-xl font-bold">Score: {score}</p>
+        <p className="text-xl font-bold">High Score: {highScore}</p>
+      </div>
+      <div className="flex justify-end">
+        <button onClick={restartGame} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+          Restart
+        </button>
+      </div>
+    </div>
             {Array.from({ length: GRID_SIZE }).map((_, y) => (
                 <div className='flex' key={y}>
                     {Array.from({ length: GRID_SIZE }).map((_, x) => (
