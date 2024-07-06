@@ -148,7 +148,9 @@ const SnakeGrid = () => {
           </button>
         </div>
       )}
+       <div className="grid grid-cols-20 grid-rows-20 border border-black bg-green-200">
 
+       
       {Array.from({ length: GRID_SIZE }).map((_, y) => (
         <div className="flex" key={y}>
           {Array.from({ length: GRID_SIZE }).map((_, x) => (
@@ -159,14 +161,16 @@ const SnakeGrid = () => {
                                   snake.some(
                                     (snakePart) =>
                                       snakePart.x === x && snakePart.y === y
-                                  ) ?"bg-green-500":"border-gray-50"
+                                  ) ?"bg-green-500":""
                                 }
                                 ${food.x === x && food.y === y? "bg-red-500":""}
                             `}
             ></div>
           ))}
         </div>
+        
       ))}
+      </div>
        <div className="flex flex-col items-center justify-between h-full mt-4 bg-blue-50 p-4 rounded-lg">
         <div className="text-center mb-4">
           <p className="text-xl font-bold">Score: {score}</p>
