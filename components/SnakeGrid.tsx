@@ -133,7 +133,7 @@ const SnakeGrid = () => {
     <div
       tabIndex={0}
       autoFocus
-      className="relative p-4 bg-white shadow-lg rounded-lg border-gray-200"
+      className="fixed p-4 bg-white shadow-lg rounded-lg border-gray-200"
     >
       {gameOver && (
         <div className="absolute inset-0 flex flex-col items-center justify-center bg-gray-100 p-4 rounded-lg shadow-lg">
@@ -148,7 +148,7 @@ const SnakeGrid = () => {
           </button>
         </div>
       )}
-       <div className="grid grid-cols-20 grid-rows-20 border border-black bg-green-200">
+       <div className="grid grid-cols-20 grid-rows-20 border-2 border-green-500 bg-green-200">
 
        
       {Array.from({ length: GRID_SIZE }).map((_, y) => (
