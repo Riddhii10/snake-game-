@@ -2,3 +2,35 @@
 @tailwind components;
 @tailwind utilities;
 
+/* styles/globals.css */
+
+@layer components {
+    .custom-font{
+        font-family: Neucha, sans-serif;
+    }
+    .play-again {
+      @apply bg-white border-2 border-black text-gray-700 cursor-pointer transition-all ease-in-out duration-200 font-bold py-2 px-4;
+      border-radius: 15px 225px 255px 15px;
+      box-shadow: rgba(0, 0, 0, 0.2) 15px 28px 25px -18px;
+      font-family: Neucha, sans-serif;
+      line-height: 23px;
+    }
+  
+    .play-again:hover {
+      box-shadow: rgba(0, 0, 0, 0.3) 2px 8px 8px -5px;
+      transform: translate3d(0, 2px, 0);
+    }
+  
+    .play-again:focus {
+      box-shadow: rgba(0, 0, 0, 0.3) 2px 8px 4px -6px;
+    }
+  
+    .custom-radius {
+      border-radius: 15px 225px 255px 15px 15px 255px 225px 15px;
+      border-bottom-left-radius: 15px 255px;
+      border-bottom-right-radius: 225px 15px;
+      border-top-left-radius: 255px 15px;
+      border-top-right-radius: 15px 225px;
+    }
+  }
+  

@@ -1,14 +1,12 @@
 "use client";
 import React, { KeyboardEvent, useEffect, useState } from "react";
 import SnakePart from './SnakePart';
-
 const GRID_SIZE = 20;
-
+const SNAKE_SPEED = 150; 
 type Point = {
   x: number;
   y: number;
 };
-
 type Direction = "UP" | "DOWN" | "LEFT" | "RIGHT";
 
 const SnakeGrid = () => {
@@ -17,7 +15,7 @@ const SnakeGrid = () => {
     { y: 0, x: 1 },
     { y: 0, x: 0 },
   ]);
-  const [food, setFood] = useState<Point>({ x: 0, y: 0 });
+  const [food, setFood] = useState<Point | null>(null); 
   const [direction, setDirection] = useState<Direction | null>(null);
   const [gameOver, setGameOver] = useState<boolean>(false);
   const [score, setScore] = useState(0);
@@ -64,7 +62,7 @@ const SnakeGrid = () => {
 
     newSnake.unshift(snakeHead);
 
-    if (snakeHead.x === food.x && snakeHead.y === food.y) {
+    if (snakeHead.x === food?.x && snakeHead.y === food?.y) {
       generateFood();
     } else {
       newSnake.pop();
@@ -75,17 +73,17 @@ const SnakeGrid = () => {
   };
 
   const handleKeyPress = (event: KeyboardEvent<HTMLDivElement>) => {
-    event.preventDefault(); // Prevents the default action
-    if (event.key === "ArrowUp" && direction !== "DOWN") {
+    event.preventDefault(); 
+    if ((event.key === "ArrowUp"||event.key==="w" )&& direction !== "DOWN") {
       setDirection("UP");
     }
-    if (event.key === "ArrowDown" && direction !== "UP") {
+    if ((event.key === "ArrowDown"||event.key==="s" )&& direction !== "UP") {
       setDirection("DOWN");
     }
-    if (event.key === "ArrowLeft" && direction !== "RIGHT") {
+    if ((event.key === "ArrowLeft"||event.key==="a") && direction !== "RIGHT") {
       setDirection("LEFT");
     }
-    if (event.key === "ArrowRight" && direction !== "LEFT") {
+    if ((event.key === "ArrowRight"||event.key==="d") && direction !== "LEFT") {
       setDirection("RIGHT");
     }
   };
@@ -104,7 +102,7 @@ const SnakeGrid = () => {
   }, [direction]);
 
   useEffect(() => {
-    generateFood();
+    generateFood(); 
   }, []);
 
   useEffect(() => {
@@ -118,7 +116,7 @@ const SnakeGrid = () => {
 
   useEffect(() => {
     if (direction && !gameOver) {
-      const interval = setInterval(moveSnake, 100);
+      const interval = setInterval(moveSnake, SNAKE_SPEED); 
       return () => clearInterval(interval);
     }
   }, [snake, direction, gameOver]);
@@ -131,43 +129,67 @@ const SnakeGrid = () => {
     ]);
     setDirection(null);
     setGameOver(false);
-    generateFood();
+    generateFood(); 
   };
 
   return (
     <div
       tabIndex={0}
       autoFocus
-      className="relative flex flex-col items-center justify-center p-2 bg-white shadow-lg rounded-md border-gray-200"
+      className="relative flex flex-col items-center justify-center p-2 bg-[#dfe1e8] shadow-lg rounded-md border-gray-200"
     >
       {gameOver && (
-        <div className="absolute inset-0 flex flex-col items-center justify-center bg-gray-100 p-2 rounded-lg shadow-lg">
-          <h1 className="text-4xl font-bold text-red-500 mt-2">GAME OVER!</h1>
-          <p className="mt-2 text-lg">Score: {score}</p>
-          <p className="mt-2 text-lg">High Score: {highScore}</p>
-          <button
+        <div className="absolute inset-0 flex flex-col items-center justify-center bg-[#dfe1e8] p-2 rounded-lg shadow-lg">
+          <h1 className="text-4xl font-bold text-red-500 mt-2 custom-font">GAME OVER!</h1>
+          <p className="mt-2 text-lg custom-font">Score: {score}</p>
+          <p className="mt-2 text-lg custom-font">High Score: {highScore}</p>
+          {/* <button
             onClick={restartGame}
-            className="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+            className="mt-4 bg-[#ffdf64] hover:bg-[] text-black font-bold py-2 px-4 rounded"
           >
             Play Again
-          </button>
+          </button> */}
+          <button
+  onClick={restartGame}
+  className="play-again custom-radius mt-4 text-black font-bold py-2 px-4 transition-all ease-in-out duration-200"
+>
+  Play Again
+</button>
+
         </div>
       )}
-      <div className="border-4 border-green-300 bg-green-200 p-1 rounded-lg">
+      {/* <div className="flex w-full h-full mt-4 p-2 rounded-3xl "> */}
+        <div className="mt-3 mb-0.5 flex text-[#8c8c8c]">
+          <p className="text-base font-semibold pr-[8.5rem]">Score: {score}</p>
+          <p className="text-base font-bold">High Score: {highScore}</p>
+        {/* </div> */}
+        <div className="flex justify-end">
+          {/* <button
+            onClick={restartGame}
+            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+          >
+            Play
+          </button> */}
+        </div>
+      </div>
+      <div className="border border-black bg-[#ffcc66] p-1 rounded-lg">
         <svg
           viewBox={`0 0 ${GRID_SIZE * 20} ${GRID_SIZE * 20}`}
           className="w-full h-full"
         >
           <SnakePart points={snake} />
-          <circle
-            cx={food.x * 20 + 10}
-            cy={food.y * 20 + 10}
-            r={10}
-            fill="red"
-          />
+          {food && ( 
+            <circle
+              cx={food.x * 20 + 10}
+              cy={food.y * 20 + 10}
+              r={10}
+              fill="red"
+              fillOpacity="0.7"
+            />
+          )}
         </svg>
       </div>
-      <div className="flex flex-col items-center justify-between w-full h-full mt-4 bg-blue-50 p-2 rounded-3xl border-4 border-blue-200">
+      {/* <div className="flex flex-col items-center justify-between w-full h-full mt-4 bg-blue-50 p-2 rounded-3xl border-4 border-blue-200">
         <div className="text-center mb-4">
           <p className="text-xl font-bold">Score: {score}</p>
           <p className="text-xl font-bold">High Score: {highScore}</p>
@@ -180,7 +202,7 @@ const SnakeGrid = () => {
             Play
           </button>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };
