@@ -399,7 +399,7 @@ const SnakeGrid = () => {
       {visible && <Joystick onMove={handleJoystickMove} />} 
       <button
         onClick={() => setVisible(!visible)}
-        className="transition-opacity duration-200 text-[#8c8c8c] pt-2 hover:text-black"
+        className="transition-opacity duration-200 text-[#8c8c8c] pt-2 hover:text-gray-800"
       >
         {visible ? 'Hide Joystick' : 'Show Joystick'}
       </button>
