@@ -2,7 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-/* styles/globals.css */
 
 @layer components {
     .custom-font{

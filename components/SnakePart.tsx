@@ -12,7 +12,7 @@ type SnakePartProps = {
 
 const SnakePart: React.FC<SnakePartProps> = ({ points }) => {
   const size = 20;
-  const thinnerSize = 6; // Thinner width for the snake body
+  const thinnerSize = 6; 
 
   const getPathData = (points: Point[]) => {
     let pathData = `M${points[0].x * size + size / 2} ${points[0].y * size + size / 2}`;

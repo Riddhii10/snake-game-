@@ -1,8 +1,7 @@
 "use client";
 import React, { KeyboardEvent, useEffect, useState, useCallback } from "react";
 import SnakePart from './SnakePart';
-import Joystick from './Joystick'; // Import the Joystick component
-
+import Joystick from './Joystick'; 
 const GRID_SIZE = 20;
 const SNAKE_SPEED = 150; 
 
@@ -119,8 +118,7 @@ const SnakeGrid = () => {
         handleKeyPress as unknown as EventListener
       );
     };
-  }, [handleKeyPress]); // Added handleKeyPress to dependency array
-
+  }, [handleKeyPress]); 
   useEffect(() => {
     generateFood(); 
   }, []);
@@ -132,15 +130,14 @@ const SnakeGrid = () => {
         setHighScore(score);
       }
     }
-  }, [gameOver, score, highScore]); // Added score and highScore to dependency array
+  }, [gameOver, score, highScore]); 
 
   useEffect(() => {
     if (direction && !gameOver) {
       const interval = setInterval(moveSnake, SNAKE_SPEED); 
       return () => clearInterval(interval);
     }
-  }, [moveSnake, direction, gameOver]); // Added moveSnake to dependency array
-
+  }, [moveSnake, direction, gameOver]); 
   const restartGame = () => {
     setSnake([
       { y: 0, x: 2 },
